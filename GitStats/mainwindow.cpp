@@ -15,17 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label->setText(reqHandler.GetStatus());
 
     auto users = reqHandler.GetAuthors();
-    QString userText = "";
 
-    for (auto user : users) {
-        userText.append(user.Name);
-        userText.append(" ");
-        userText.append(QString::number(user.Commits));
-        userText.append("\n");
-        qDebug("Test1");
-    }
-
-    ui->label_2->setText(userText);
+    blameView->AddUsers(users);
 }
 
 MainWindow::~MainWindow()
