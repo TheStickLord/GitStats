@@ -4,13 +4,11 @@
 
 Todos:
 
-- File blame/%/most commits
-
 - Overall commits
   
   - Filtering for file types
 
-- Other?
+- Line edit counts
 
 ---
 
@@ -18,4 +16,16 @@ Todos:
 
 - Added main code and started on the model for git requests
 
-- Adde
+- Updated GUI
+
+- Made git dinky tapped in
+
+- did other shit idk its like 1:33 AM
+
+- Built out test executable
+
+
+
+*4/27/26*
+
+* NTR
