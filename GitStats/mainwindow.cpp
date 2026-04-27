@@ -10,7 +10,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->BlameSlot->addWidget(blameView);
+    blameView->Update();
     ui->FileSlot->addWidget(fileBlameView);
+    fileBlameView->Update();
 
     ui->Status_2->setText(reqHandler.GetStatus());
 
@@ -18,6 +20,11 @@ MainWindow::MainWindow(QWidget *parent)
             &QAction::triggered,
             this,
             &MainWindow::Update);
+
+    connect(ui->actionPull,
+            &QAction::triggered,
+            this,
+            &MainWindow::Pull);
 
     connect(ui->pushButton, &QPushButton::clicked,
             this, [this]{ui->Status_2->setText(reqHandler.GetStatus());});
@@ -40,7 +47,5 @@ void MainWindow::Update() {
 }
 
 void MainWindow::Pull() {
-    QString pullsStatus = reqHandler.PullRepo();
-    this->Update();
-    ui->PullsStatus->setText(pullsStatus);
+    ui->PullsStatus->setText(reqHandler.PullRepo());
 }

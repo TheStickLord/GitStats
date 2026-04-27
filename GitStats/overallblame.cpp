@@ -10,8 +10,6 @@ OverallBlame::OverallBlame(QWidget *parent, GitParentRequest* reqHandler)
     ui->setupUi(this);
 
     ui->ChartSlot->insertWidget(0, chart);
-
-    Update();
 }
 
 OverallBlame::~OverallBlame()
@@ -38,12 +36,18 @@ void OverallBlame::AddUsers(std::vector<User> users)
 
     chart->SetUsers(users); // important
 
+    // Check for users
+    if (users.size() < 1) {
+        QLabel* label = new QLabel();
+        label->setText("No Git data available");
+        ui->Users->addWidget(label);
+    }
+
     // Calculate size ---------------------------
     double total = 0;
     for (const auto &user : users) {
         total += user.Commits;
     }
-    if (total < 1) total++;
 
     // Add users
     for (int i = 0; i < users.size(); i++) {
