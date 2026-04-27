@@ -17,7 +17,7 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        donutchart.h donutchart.cpp donutchart.ui
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -27,6 +27,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         gitparentrequest.h gitparentrequest.cpp
         overallblame.h overallblame.cpp overallblame.ui
         user.h user.cpp
+        circularchart.h circularchart.cpp circularchart.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET GitStats APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

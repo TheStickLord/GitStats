@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "gitparentrequest.h"
 #include "overallblame.h"
 #include <QMainWindow>
 
@@ -22,5 +23,11 @@ private:
     Ui::MainWindow *ui;
 
     OverallBlame* blameView = new OverallBlame();
+
+    GitParentRequest reqHandler;
+
+public slots:
+    void Update();
+    void Pull();
 };
 #endif // MAINWINDOW_H

@@ -16,8 +16,7 @@ QString GitParentRequest::GetStatus()
 {
     QProcess process;
 
-    process.start(QString("cd %1").arg(workingDir));
-    process.waitForFinished();
+    process.setWorkingDirectory(workingDir);
 
     process.start("git", QStringList() << "status");
     process.waitForFinished();
@@ -29,6 +28,8 @@ QString GitParentRequest::GetStatus()
 std::vector<User> GitParentRequest::GetAuthors()
 {
     QProcess process;
+    process.setWorkingDirectory(workingDir);
+
     // It is often better to use a list of arguments to avoid shell injection/parsing issues
     process.start("git", QStringList() << "shortlog" << "-sne" << "HEAD");
 
@@ -46,7 +47,7 @@ std::vector<User> GitParentRequest::GetAuthors()
     // Example line: "   145  Jane Doe <jane@example.com>"
     QRegularExpression re(R"(\s*(\d+)\t(.+)\s+<(.+)>)");
 
-    for (const QString& line : lines)
+    for (const QString& line : std::as_const(lines))
     {
         QRegularExpressionMatch match = re.match(line);
 
@@ -61,4 +62,17 @@ std::vector<User> GitParentRequest::GetAuthors()
     }
 
     return users;
+}
+
+QString GitParentRequest::PullRepo()
+{
+    QProcess process;
+
+    process.setWorkingDirectory(workingDir);
+
+    process.start("git", QStringList() << "pull");
+    process.waitForFinished();
+
+    QString output = process.readAllStandardOutput();
+    return output;
 }

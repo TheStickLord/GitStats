@@ -1,7 +1,7 @@
 #ifndef OVERALLBLAME_H
 #define OVERALLBLAME_H
 
-#include "donutchart.h"
+#include "circularchart.h"
 #include "user.h"
 #include <QWidget>
 
@@ -19,10 +19,12 @@ public:
 
     void AddUsers(std::vector<User> users);
 
+    void Clear();
+
 private:
     Ui::OverallBlame *ui;
 
-    DonutChart* chart = new DonutChart();;
+    CircularChart* chart = new CircularChart(this);
 };
 
 #endif // OVERALLBLAME_H

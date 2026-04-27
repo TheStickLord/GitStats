@@ -12,6 +12,10 @@ public:
     int Commits = 0;
     QString Name = "";
     QString Email = "";
+
+    bool operator<(const User& other) const {
+        return Commits < other.Commits;
+    }
 };
 
 #endif // USER_H

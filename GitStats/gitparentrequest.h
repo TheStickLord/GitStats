@@ -16,6 +16,8 @@ public:
 
     std::vector<User> GetAuthors();
 
+    QString PullRepo();
+
 private:
     QString workingDir = QDir::currentPath();
 };
