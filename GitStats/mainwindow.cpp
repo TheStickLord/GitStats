@@ -16,6 +16,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->Status_2->setText(reqHandler.GetStatus());
 
+    setWindowTitle(reqHandler.GetRepoName());
+    setWindowIcon(QIcon(":/images/GSIcon.png"));
+
     connect(ui->actionFolder,
             &QAction::triggered,
             this,
@@ -26,8 +29,10 @@ MainWindow::MainWindow(QWidget *parent)
             this,
             &MainWindow::Pull);
 
-    connect(ui->pushButton, &QPushButton::clicked,
-            this, [this]{ui->Status_2->setText(reqHandler.GetStatus());});
+    connect(ui->actionReload_Folder,
+            &QAction::triggered,
+            this,
+            [this]{ui->Status_2->setText(reqHandler.GetStatus());});
 }
 
 MainWindow::~MainWindow()
@@ -41,6 +46,7 @@ void MainWindow::Update() {
     reqHandler.SetDirectory(dir);
 
     ui->Status_2->setText(reqHandler.GetStatus());
+    setWindowTitle(reqHandler.GetRepoName());
 
     this->fileBlameView->Update();
     this->blameView->Update();

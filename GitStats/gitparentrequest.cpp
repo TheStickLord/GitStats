@@ -130,3 +130,18 @@ QStringList GitParentRequest::GetFiles()
 
     return files;
 }
+
+QString GitParentRequest::GetRepoName()
+{
+    QProcess process;
+    process.setWorkingDirectory(workingDir);
+
+    process.start("git", QStringList()
+                             << "remote"
+                             << "get-url"
+                             << "origin");
+
+    process.waitForFinished();
+    QString output = process.readAllStandardOutput();
+    return output;
+}

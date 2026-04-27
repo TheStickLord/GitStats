@@ -24,6 +24,8 @@ public:
 
     std::vector<User> GetBlameForFile();
 
+    QString GetRepoName();
+
 private:
     QString workingDir = QDir::currentPath();
 };
