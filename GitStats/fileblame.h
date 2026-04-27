@@ -25,6 +25,16 @@ private:
     GitParentRequest* reqHandler;
 
     OverallBlame* blameView = new OverallBlame(this, reqHandler);
+
+    QStringList selectedOptions = {};
+
+    void showPopup();
+
+    void removeUnecessaryItems();
+
+    void getTypes(QStringList files);
+
+    QStringList fileTypes = {};
 };
 
 #endif // FILEBLAME_H

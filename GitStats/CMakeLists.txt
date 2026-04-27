@@ -30,6 +30,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         circularchart.h circularchart.cpp circularchart.ui
         fileblame.h fileblame.cpp fileblame.ui
         resources.qrc
+        checkboxdialog.h checkboxdialog.cpp checkboxdialog.ui
 
     )
 # Define target properties for Android with Qt 6 as:
