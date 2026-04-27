@@ -4,6 +4,7 @@
 #include "fileblame.h"
 #include "gitparentrequest.h"
 #include "overallblame.h"
+#include "overalldiff.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -26,6 +27,8 @@ private:
     GitParentRequest reqHandler;
 
     OverallBlame* blameView = new OverallBlame(this, &reqHandler);
+    OverallDiff* diffView = new OverallDiff(this, &reqHandler);
+
     FileBlame* fileBlameView = new FileBlame(this, &reqHandler);
 
 public slots:

@@ -107,6 +107,7 @@ std::vector<User> GitParentRequest::GetAuthorsFile(QString file)
 std::vector<User> GitParentRequest::GetDiffByUser()
 {
     QProcess process;
+    qDebug() << workingDir;
     process.setWorkingDirectory(workingDir);
 
     process.start("git", QStringList()
@@ -166,8 +167,8 @@ std::vector<User> GitParentRequest::GetDiffByUser()
             {
                 if (user.Name == currentAuthor)
                 {
-                    user.added += added;
-                    user.deleted += deleted;
+                    user.Added += added;
+                    user.Deleted += deleted;
                     break;
                 }
             }
@@ -226,8 +227,8 @@ std::vector<User> GitParentRequest::GetDiffByUserFile(QString file)
             int added = statMatch.captured(1).toInt();
             int deleted = statMatch.captured(2).toInt();
 
-            totals[currentKey].added += added;
-            totals[currentKey].deleted += deleted;
+            totals[currentKey].Added += added;
+            totals[currentKey].Deleted += deleted;
         }
     }
 

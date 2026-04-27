@@ -14,10 +14,11 @@ FileBlame::FileBlame(QWidget *parent, GitParentRequest* reqHandler)
 
     ui->comboBox->addItems(options);
     ui->BlameSlot->addWidget(blameView);
+    ui->DiffSlot->addWidget(diffView);
 
     blameView->UpdateFile(ui->comboBox->currentText());
 
-    connect(ui->comboBox, &QComboBox::currentTextChanged, this, [this](const QString text){blameView->UpdateFile(text);});
+    connect(ui->comboBox, &QComboBox::currentTextChanged, this, [this](const QString text){blameView->UpdateFile(text); diffView->UpdateFile(text);});
     connect(ui->filterButton, &QPushButton::clicked, this, &FileBlame::showPopup);
 }
 
@@ -36,6 +37,7 @@ void FileBlame::Update()
     getTypes(options);
 
     blameView->UpdateFile(ui->comboBox->currentText());
+    diffView->UpdateFile(ui->comboBox->currentText());
 }
 
 void FileBlame::getTypes(QStringList files)

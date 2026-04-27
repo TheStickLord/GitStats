@@ -10,7 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->BlameSlot->addWidget(blameView);
+    ui->BlameSlot->addWidget(diffView);
     blameView->Update();
+    diffView->Update();
+
     ui->FileSlot->addWidget(fileBlameView);
     fileBlameView->Update();
 
@@ -54,6 +57,7 @@ void MainWindow::Update() {
 
     this->fileBlameView->Update();
     this->blameView->Update();
+    this->diffView->Update();
 }
 
 void MainWindow::Pull() {

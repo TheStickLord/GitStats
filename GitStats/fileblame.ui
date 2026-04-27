@@ -67,6 +67,9 @@
       <layout class="QVBoxLayout" name="BlameSlot"/>
      </item>
      <item>
+      <layout class="QVBoxLayout" name="DiffSlot"/>
+     </item>
+     <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Orientation::Vertical</enum>

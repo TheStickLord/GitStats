@@ -31,6 +31,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         fileblame.h fileblame.cpp fileblame.ui
         resources.qrc
         checkboxdialog.h checkboxdialog.cpp checkboxdialog.ui
+        overalldiff.h overalldiff.cpp overalldiff.ui
 
     )
 # Define target properties for Android with Qt 6 as:

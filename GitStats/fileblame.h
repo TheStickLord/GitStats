@@ -3,6 +3,7 @@
 
 #include "gitparentrequest.h"
 #include "overallblame.h"
+#include "overalldiff.h"
 #include <QWidget>
 
 namespace Ui {
@@ -25,6 +26,7 @@ private:
     GitParentRequest* reqHandler;
 
     OverallBlame* blameView = new OverallBlame(this, reqHandler);
+    OverallDiff* diffView = new OverallDiff(this, reqHandler);
 
     QStringList selectedOptions = {};
 
