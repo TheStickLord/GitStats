@@ -2,6 +2,7 @@
 #define OVERALLBLAME_H
 
 #include "circularchart.h"
+#include "gitparentrequest.h"
 #include "user.h"
 #include <QWidget>
 
@@ -14,15 +15,19 @@ class OverallBlame : public QWidget
     Q_OBJECT
 
 public:
-    explicit OverallBlame(QWidget *parent = nullptr);
+    explicit OverallBlame(QWidget *parent = nullptr, GitParentRequest* reqHandler = nullptr);
     ~OverallBlame();
 
-    void AddUsers(std::vector<User> users);
+    void Update();
+    void UpdateFile(QString file);
 
+    void AddUsers(std::vector<User> users);
     void Clear();
 
 private:
     Ui::OverallBlame *ui;
+
+    GitParentRequest* reqHandler;
 
     CircularChart* chart = new CircularChart(this);
 };

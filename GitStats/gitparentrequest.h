@@ -16,7 +16,13 @@ public:
 
     std::vector<User> GetAuthors();
 
+    std::vector<User> GetAuthorsFile(QString file);
+
     QString PullRepo();
+
+    QStringList GetFiles();
+
+    std::vector<User> GetBlameForFile();
 
 private:
     QString workingDir = QDir::currentPath();

@@ -2,18 +2,31 @@
 #include "ui_overallblame.h"
 #include <qlabel.h>
 
-OverallBlame::OverallBlame(QWidget *parent)
+OverallBlame::OverallBlame(QWidget *parent, GitParentRequest* reqHandler)
     : QWidget(parent)
     , ui(new Ui::OverallBlame)
+    , reqHandler(reqHandler)
 {
     ui->setupUi(this);
 
     ui->ChartSlot->insertWidget(0, chart);
+
+    Update();
 }
 
 OverallBlame::~OverallBlame()
 {
     delete ui;
+}
+
+void OverallBlame::Update()
+{
+    AddUsers(reqHandler->GetAuthors());
+}
+
+void OverallBlame::UpdateFile(QString file)
+{
+    AddUsers(reqHandler->GetAuthorsFile(file));
 }
 
 void OverallBlame::AddUsers(std::vector<User> users)
@@ -24,12 +37,6 @@ void OverallBlame::AddUsers(std::vector<User> users)
     std::reverse(users.begin(), users.end());
 
     chart->SetUsers(users); // important
-
-    // Set the top text -------------------------
-    // QLabel* top = new QLabel();
-    // top->setText("Percent (%) | Commits (#) | User + Email");
-    // top->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    // ui->Users->addWidget(top);
 
     // Calculate size ---------------------------
     double total = 0;
@@ -75,7 +82,7 @@ void OverallBlame::AddUsers(std::vector<User> users)
 
 void OverallBlame::Clear()
 {
-    while (ui->Users->count() > 1) {
+    while (ui->Users->count() > 0) {
         auto item = ui->Users->takeAt(0);
         if (item->widget()) {
             delete item->widget();

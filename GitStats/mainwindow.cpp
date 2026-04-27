@@ -10,15 +10,17 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->BlameSlot->addWidget(blameView);
-    ui->Status_2->setText(reqHandler.GetStatus());
+    ui->FileSlot->addWidget(fileBlameView);
 
-    auto users = reqHandler.GetAuthors();
-    blameView->AddUsers(users);
+    ui->Status_2->setText(reqHandler.GetStatus());
 
     connect(ui->actionFolder,
             &QAction::triggered,
             this,
             &MainWindow::Update);
+
+    connect(ui->pushButton, &QPushButton::clicked,
+            this, [this]{ui->Status_2->setText(reqHandler.GetStatus());});
 }
 
 MainWindow::~MainWindow()
@@ -31,10 +33,10 @@ void MainWindow::Update() {
 
     reqHandler.SetDirectory(dir);
 
-    auto users = reqHandler.GetAuthors();
-    blameView->AddUsers(users);
-
     ui->Status_2->setText(reqHandler.GetStatus());
+
+    this->fileBlameView->Update();
+    this->blameView->Update();
 }
 
 void MainWindow::Pull() {

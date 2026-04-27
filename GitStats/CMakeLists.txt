@@ -28,6 +28,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         overallblame.h overallblame.cpp overallblame.ui
         user.h user.cpp
         circularchart.h circularchart.cpp circularchart.ui
+        fileblame.h fileblame.cpp fileblame.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET GitStats APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
