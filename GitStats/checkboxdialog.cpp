@@ -8,7 +8,7 @@ CheckboxDialog::CheckboxDialog(QWidget *parent, QStringList options)
 {
     ui->setupUi(this);
 
-    setWindowTitle("");
+    setWindowTitle(" ");
 
     for (const QString &option : std::as_const(options)) {
         addOption(option);

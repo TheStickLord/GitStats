@@ -19,6 +19,10 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle(reqHandler.GetRepoName());
     setWindowIcon(QIcon(":/images/GSIcon.png"));
 
+    ui->actionFolder->setShortcut(QKeySequence("Ctrl+F"));
+    ui->actionReload_Folder->setShortcut(QKeySequence("Ctrl+R"));
+    ui->actionPull->setShortcut(QKeySequence("Ctrl+C"));
+
     connect(ui->actionFolder,
             &QAction::triggered,
             this,
