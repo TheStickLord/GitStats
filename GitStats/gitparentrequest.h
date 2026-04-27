@@ -18,6 +18,10 @@ public:
 
     std::vector<User> GetAuthorsFile(QString file);
 
+    std::vector<User> GetDiffByUser();
+
+    std::vector<User> GetDiffByUserFile(QString file);
+
     QString PullRepo();
 
     QStringList GetFiles();

@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/images">
         <file>GSIcon.png</file>
+        <file>GearIcon.png</file>
     </qresource>
 </RCC>

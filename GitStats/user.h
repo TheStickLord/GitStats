@@ -10,6 +10,8 @@ public:
     User(int Commits, QString Name, QString Email);
 
     int Commits = 0;
+    int added = 0;
+    int deleted = 0;
     QString Name = "";
     QString Email = "";
 

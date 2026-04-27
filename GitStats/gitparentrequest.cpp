@@ -4,6 +4,7 @@
 #include <QDebug>
 
 #include <QRegularExpression>
+#include <unordered_map>
 
 GitParentRequest::GitParentRequest() {}
 
@@ -99,6 +100,142 @@ std::vector<User> GitParentRequest::GetAuthorsFile(QString file)
             users.push_back(User(commits, authorName, email));
         }
     }
+
+    return users;
+}
+
+std::vector<User> GitParentRequest::GetDiffByUser()
+{
+    QProcess process;
+    process.setWorkingDirectory(workingDir);
+
+    process.start("git", QStringList()
+                             << "log"
+                             << "--format=author:%an"
+                             << "--numstat"
+                             << "HEAD");
+
+    if (!process.waitForFinished())
+        return {};
+
+    QString output = QString::fromUtf8(process.readAllStandardOutput());
+    QStringList lines = output.split('\n', Qt::SkipEmptyParts);
+
+    std::vector<User> users;
+    QString currentAuthor;
+
+    QRegularExpression authorRe(R"(^author:(.+)$)");
+    QRegularExpression numstatRe(R"(^(\d+)\s+(\d+)\s+(.+)$)");
+
+    for (const QString& line : lines)
+    {
+        auto authorMatch = authorRe.match(line);
+
+        if (authorMatch.hasMatch())
+        {
+            currentAuthor = authorMatch.captured(1).trimmed();
+
+            bool found = false;
+            for (const User& user : users)
+            {
+                if (user.Name == currentAuthor)
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                User u;
+                u.Name = currentAuthor;
+                users.push_back(u);
+            }
+
+            continue;
+        }
+
+        auto statMatch = numstatRe.match(line);
+
+        if (statMatch.hasMatch() && !currentAuthor.isEmpty())
+        {
+            int added = statMatch.captured(1).toInt();
+            int deleted = statMatch.captured(2).toInt();
+
+            for (User& user : users)
+            {
+                if (user.Name == currentAuthor)
+                {
+                    user.added += added;
+                    user.deleted += deleted;
+                    break;
+                }
+            }
+        }
+    }
+
+    return users;
+}
+
+std::vector<User> GitParentRequest::GetDiffByUserFile(QString file)
+{
+    QProcess process;
+    process.setWorkingDirectory(workingDir);
+
+    process.start("git", QStringList()
+                             << "log"
+                             << "--format=author:%an <%ae>"
+                             << "--numstat"
+                             << "HEAD"
+                             << "--"
+                             << file);
+
+    if (!process.waitForFinished())
+        return {};
+
+    QString output = QString::fromUtf8(process.readAllStandardOutput());
+    QStringList lines = output.split('\n', Qt::SkipEmptyParts);
+
+    std::unordered_map<QString, User> totals;
+    QString currentKey;
+
+    QRegularExpression authorRe(R"(^author:(.+)\s+<(.+)>$)");
+    QRegularExpression numstatRe(R"(^(\d+)\s+(\d+)\s+(.+)$)");
+
+    for (const QString& line : std::as_const(lines))
+    {
+        auto authorMatch = authorRe.match(line);
+
+        if (authorMatch.hasMatch())
+        {
+            QString name = authorMatch.captured(1).trimmed();
+            QString email = authorMatch.captured(2).trimmed();
+
+            currentKey = email;
+
+            if (!totals.contains(currentKey))
+                totals[currentKey] = User(0, name, email);
+
+            continue;
+        }
+
+        auto statMatch = numstatRe.match(line);
+
+        if (statMatch.hasMatch() && !currentKey.isEmpty())
+        {
+            int added = statMatch.captured(1).toInt();
+            int deleted = statMatch.captured(2).toInt();
+
+            totals[currentKey].added += added;
+            totals[currentKey].deleted += deleted;
+        }
+    }
+
+
+    std::vector<User> users;
+
+    for (const auto& pair : totals)
+        users.push_back(pair.second);
 
     return users;
 }

@@ -9,6 +9,7 @@ CheckboxDialog::CheckboxDialog(QWidget *parent, QStringList options)
     ui->setupUi(this);
 
     setWindowTitle(" ");
+    setWindowIcon(QIcon(":/images/GearIcon.png"));
 
     for (const QString &option : std::as_const(options)) {
         addOption(option);
