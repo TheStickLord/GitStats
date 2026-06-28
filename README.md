@@ -4,6 +4,10 @@ Git blame visualizer to flex on your friends
 Requires Qt creator to run :+1:
 
 ---
+How to run:
+
+  Open the "GitStats/CMakeLists.txt" file in Qt Creator, then build/run the project.
+
 How to use:
 
   Actions:
